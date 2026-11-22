@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wearable Readiness Analytics | Nana Oduro Tannor</title>
+<style>
+  :root { --ink:#1f2933; --muted:#5f6b7a; --accent:#1f3a5f; --line:#e3e7ec; --bg:#ffffff; --soft:#f5f7fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); line-height:1.6; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
+  header { border-bottom:1px solid var(--line); padding:40px 0 28px; }
+  .tag { display:inline-block; font-size:13px; color:var(--accent); background:#e8eef6; padding:3px 10px; border-radius:20px; margin-bottom:12px; }
+  h1 { font-size:32px; margin:0 0 8px; color:var(--accent); }
+  .sub { color:var(--muted); font-size:18px; margin:0; }
+  .links { margin-top:16px; font-size:15px; }
+  .links a { color:var(--accent); margin-right:18px; }
+  section { padding:32px 0; border-bottom:1px solid var(--line); }
+  h2 { font-size:22px; color:var(--accent); margin:0 0 14px; }
+  .findings { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .card { background:var(--soft); border-left:4px solid var(--accent); padding:16px 18px; border-radius:6px; }
+  .card b { display:block; font-size:17px; margin-bottom:4px; }
+  .viz { width:100%; height:860px; border:1px solid var(--line); border-radius:6px; }
+  ul { padding-left:20px; margin:0; }
+  li { margin-bottom:6px; }
+  .note { font-size:14px; color:var(--muted); }
+  footer { padding:24px 0 40px; color:var(--muted); font-size:14px; }
+  @media (max-width:700px){ h1{font-size:26px;} .viz{height:600px;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="tag">Work in progress · final version Dec 2026</span>
+    <h1>Wearable Health Readiness Analytics</h1>
+    <p class="sub">What daily habits should a wearable app nudge to improve next-day readiness? A Tableau analysis of 7 weeks of Fitbit data.</p>
+    <div class="links">
+      <a href="PASTE-YOUR-TABLEAU-PUBLIC-LINK-HERE">View on Tableau Public</a>
+      <a href="https://github.com/odurotannor/Wearable-Readiness-Analytics">GitHub repo</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Key findings</h2>
+    <div class="findings">
+      <div class="card"><b>Late bedtimes cut sleep</b>Bedtimes after 2 AM pushed sleep below 6 hours (r ≈ −0.59 between bedtime and hours asleep).</div>
+      <div class="card"><b>Under 6 hours hurts readiness</b>Readiness dropped on nights under 6 hours; beyond that, extra sleep added little.</div>
+      <div class="card"><b>Steps don't predict readiness</b>Hitting a step goal had no consistent effect on next-day readiness at any goal level.</div>
+    </div>
+    <p style="margin-top:18px;"><b>Recommendation:</b> nudge earlier bedtimes rather than higher step goals.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Interactive dashboard</h2>
+    <iframe class="viz" src="PASTE-YOUR-TABLEAU-PUBLIC-LINK-HERE?:showVizHome=no&:embed=true" title="Readiness dashboard"></iframe>
+    <p class="note">Click a city on the map to filter the views. Use the Step Goal slider to test different goals.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it was built</h2>
+    <ul>
+      <li><b>Data:</b> Google Health / Fitbit export, Sep 15 – Nov 2, 2026 (heart rate, steps, sleep, readiness, exercise).</li>
+      <li><b>Preparation (Python):</b> converted UTC to local time across time zones and DST, resampled heart rate and steps to 5-minute intervals, removed duplicate sleep records and placeholder zeros.</li>
+      <li><b>Data model:</b> star schema with 4 fact tables (5-minute activity, daily, sleep, exercise) and shared Date, Hour, Location and Activity Type dimensions, related in Tableau.</li>
+      <li><b>Tableau techniques:</b> FIXED LOD expressions, LOOKUP table calculations, a step-goal parameter, a heatmap, scatter plots with trend lines, a map, dashboard actions and a .hyper extract.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Limitations</h2>
+    <ul>
+      <li>Single-user case study covering 49 days, so the findings describe one person, not users in general.</li>
+      <li>Readiness was recorded on 29 of 49 days; some location results rest on 1–2 days.</li>
+      <li>Locations are shown at city level only, for privacy.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Nana Oduro Tannor · MS Business Analytics &amp; AI, UT Dallas · MIS 6380 Data Visualization capstone</div>
+</footer>
+</body>
+</html>
